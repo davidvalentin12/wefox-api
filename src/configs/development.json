@@ -1,9 +1,9 @@
 {
-    "env": "development",
-    "dbConfig": {
-        "host": "localhost",
-        "database": "wefox",
-        "port": 27017
-    },
-    "secretKey": "secretKey"
+  "env": "development",
+  "dbConfig": {
+    "host": "localhost",
+    "database": "wefox",
+    "port": 27017
+  },
+  "secretKey": "secretKey"
 }

@@ -47,4 +47,10 @@ logger.add(
   }),
 );
 
-export { logger };
+const stream = {
+  write: (message: string) => {
+    logger.info(message.substring(0, message.lastIndexOf('\n')));
+  },
+};
+
+export { logger, stream };
