@@ -1,0 +1,16 @@
+tags:
+  - name: health check
+    description: root OK / healthcheck
+
+paths:
+  # [GET] root
+  /:
+    get:
+      tags:
+        - index
+      summary: health check
+      responses:
+        200:
+          description: "OK"
+        500:
+          description: "Server Error"
