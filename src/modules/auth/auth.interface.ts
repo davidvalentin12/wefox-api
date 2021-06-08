@@ -1,5 +1,5 @@
-import { Request } from "express";
-import { User } from "@/modules/auth/users/users.interface";
+import { Request } from 'express';
+import { User } from '@/modules/auth/users/users.interface';
 
 export interface DataStoredInToken {
   _id: string;

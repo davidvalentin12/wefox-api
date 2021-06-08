@@ -1,6 +1,6 @@
 {
   "env": "development",
-  "dbConfig": {
+  "DBConfig": {
     "host": "localhost",
     "database": "wefox",
     "port": 27017

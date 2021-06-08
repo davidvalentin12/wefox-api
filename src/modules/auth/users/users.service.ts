@@ -1,9 +1,9 @@
-import bcrypt from "bcrypt";
-import { CreateUserDto } from "@/modules/auth/users/users.dto";
-import HttpException from "@/shared/exceptions/HttpException";
-import { User } from "@/modules/auth/users/users.interface";
-import userModel from "@/modules/auth/users/users.model";
-import { isEmpty } from "@/shared/utils/util";
+import bcrypt from 'bcrypt';
+import { CreateUserDto } from '@/modules/auth/users/users.dto';
+import HttpException from '@/shared/exceptions/HttpException';
+import { User } from '@/modules/auth/users/users.interface';
+import userModel from '@/modules/auth/users/users.model';
+import { isEmpty } from '@/shared/utils/util';
 
 class UserService {
   public users = userModel;
@@ -14,16 +14,16 @@ class UserService {
   }
 
   public async findUserById(userId: string): Promise<User> {
-    if (isEmpty(userId)) throw new HttpException(400, "You're not userId");
+    if (isEmpty(userId)) throw new HttpException(400, 'You\'re not userId');
 
     const findUser: User = await this.users.findOne({ _id: userId });
-    if (!findUser) throw new HttpException(409, "You're not user");
+    if (!findUser) throw new HttpException(409, 'You\'re not user');
 
     return findUser;
   }
 
   public async createUser(userData: CreateUserDto): Promise<User> {
-    if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
+    if (isEmpty(userData)) throw new HttpException(400, 'You\'re not userData');
 
     const findUser: User = await this.users.findOne({ email: userData.email });
     if (findUser)
@@ -45,7 +45,7 @@ class UserService {
     userId: string,
     userData: CreateUserDto
   ): Promise<User> {
-    if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
+    if (isEmpty(userData)) throw new HttpException(400, 'You\'re not userData');
 
     if (userData.email) {
       const findUser: User = await this.users.findOne({
@@ -66,14 +66,15 @@ class UserService {
     const updateUserById: User = await this.users.findByIdAndUpdate(userId, {
       userData,
     });
-    if (!updateUserById) throw new HttpException(409, "You're not user");
+
+    if (!updateUserById) throw new HttpException(409, 'You\'re not user');
 
     return updateUserById;
   }
 
   public async deleteUser(userId: string): Promise<User> {
     const deleteUserById: User = await this.users.findByIdAndDelete(userId);
-    if (!deleteUserById) throw new HttpException(409, "You're not user");
+    if (!deleteUserById) throw new HttpException(409, 'You\'re not user');
 
     return deleteUserById;
   }

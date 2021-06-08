@@ -1,18 +1,18 @@
-import bcrypt from "bcrypt";
-import config from "config";
-import jwt from "jsonwebtoken";
-import { CreateUserDto } from "@/modules/auth/users/users.dto";
-import HttpException from "@/shared/exceptions/HttpException";
-import { DataStoredInToken, TokenData } from "@/modules/auth/auth.interface";
-import { User } from "@/modules/auth/users/users.interface";
-import userModel from "@/modules/auth/users/users.model";
-import { isEmpty } from "@/shared/utils/util";
+import bcrypt from 'bcrypt';
+import config from 'config';
+import jwt from 'jsonwebtoken';
+import { CreateUserDto } from '@/modules/auth/users/users.dto';
+import HttpException from '@/shared/exceptions/HttpException';
+import { DataStoredInToken, TokenData } from '@/modules/auth/auth.interface';
+import { User } from '@/modules/auth/users/users.interface';
+import userModel from '@/modules/auth/users/users.model';
+import { isEmpty } from '@/shared/utils/util';
 
 class AuthService {
   public users = userModel;
 
   public async signup(userData: CreateUserDto): Promise<User> {
-    if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
+    if (isEmpty(userData)) throw new HttpException(400, 'You\'re not userData');
 
     const findUser: User = await this.users.findOne({ email: userData.email });
     if (findUser)
@@ -33,7 +33,7 @@ class AuthService {
   public async login(
     userData: CreateUserDto
   ): Promise<{ cookie: string; findUser: User }> {
-    if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
+    if (isEmpty(userData)) throw new HttpException(400, 'You\'re not userData');
 
     const findUser: User = await this.users.findOne({ email: userData.email });
     if (!findUser)
@@ -44,7 +44,7 @@ class AuthService {
       findUser.password
     );
     if (!isPasswordMatching)
-      throw new HttpException(409, "You're password not matching");
+      throw new HttpException(409, 'You\'re password not matching');
 
     const tokenData = this.createToken(findUser);
     const cookie = this.createCookie(tokenData);
@@ -53,7 +53,7 @@ class AuthService {
   }
 
   public async logout(userData: User): Promise<User> {
-    if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
+    if (isEmpty(userData)) throw new HttpException(400, 'You\'re not userData');
 
     const findUser: User = await this.users.findOne({
       email: userData.email,
@@ -67,7 +67,7 @@ class AuthService {
 
   public createToken(user: User): TokenData {
     const dataStoredInToken: DataStoredInToken = { _id: user._id };
-    const secret: string = config.get("secretKey");
+    const secret: string = config.get('secretKey');
     const expiresIn: number = 60 * 60;
 
     return {

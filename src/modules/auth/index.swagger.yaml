@@ -1,0 +1,89 @@
+tags:
+  - name: health check
+    description: root OK / healthcheck
+
+paths:
+  # [POST] signup
+  /signup:
+    post:
+      tags:
+        - user
+      summary: user signup
+      parameters:
+        - name: body
+          in: body
+          description: user Data
+          required: true
+          schema:
+            $ref: "#/definitions/users"
+      responses:
+        201:
+          description: "OK"
+        409:
+          description: "Conflict"
+        500:
+          description: "Server Error"
+
+  # [POST] login
+  /login:
+    post:
+      tags:
+        - user
+      summary: user login
+      parameters:
+        - name: body
+          in: body
+          description: user Data
+          required: true
+          schema:
+            $ref: "#/definitions/users"
+      responses:
+        200:
+          description: "OK"
+        500:
+          description: "Server Error"
+
+  # [POST] logout
+  /logout:
+    post:
+      tags:
+        - user
+      summary: user logout
+      responses:
+        200:
+          description: "OK"
+        500:
+          description: "Server Error"
+
+definitions:
+  users:
+    type: object
+    required:
+      - email
+      - password
+    properties:
+      id:
+        description: user Id
+      email:
+        type: string
+        description: user Email
+      password:
+        type: string
+        description: user Password
+
+  userLogin:
+    type: object
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+        description: user Email
+      password:
+        type: string
+        description: user Password
+
+schemes:
+  - https
+  - http

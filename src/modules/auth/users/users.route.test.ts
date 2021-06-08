@@ -1,35 +1,35 @@
-import bcrypt from "bcrypt";
-import mongoose from "mongoose";
-import request from "supertest";
-import App from "@/app";
-import { CreateUserDto } from "@/modules/auth/users/users.dto";
-import UsersRoute from "@/modules/auth/users/users.route";
+import bcrypt from 'bcrypt';
+import mongoose from 'mongoose';
+import request from 'supertest';
+import App from '@/app';
+import { CreateUserDto } from '@/modules/auth/users/users.dto';
+import UsersRoute from '@/modules/auth/users/users.route';
 
 afterAll(async () => {
   await new Promise<void>((resolve) => setTimeout(() => resolve(), 500));
 });
 
-describe("Testing Users", () => {
-  describe("[GET] /users", () => {
-    it("response fineAll Users", async () => {
+describe('Testing Users', () => {
+  describe('[GET] /users', () => {
+    it('response fineAll Users', async () => {
       const usersRoute = new UsersRoute();
       const users = usersRoute.usersController.userService.users;
 
       users.find = jest.fn().mockReturnValue([
         {
-          _id: "qpwoeiruty",
-          email: "a@email.com",
-          password: await bcrypt.hash("q1w2e3r4!", 10),
+          _id: 'qpwoeiruty',
+          email: 'a@email.com',
+          password: await bcrypt.hash('q1w2e3r4!', 10),
         },
         {
-          _id: "alskdjfhg",
-          email: "b@email.com",
-          password: await bcrypt.hash("a1s2d3f4!", 10),
+          _id: 'alskdjfhg',
+          email: 'b@email.com',
+          password: await bcrypt.hash('a1s2d3f4!', 10),
         },
         {
-          _id: "zmxncbv",
-          email: "c@email.com",
-          password: await bcrypt.hash("z1x2c3v4!", 10),
+          _id: 'zmxncbv',
+          email: 'c@email.com',
+          password: await bcrypt.hash('z1x2c3v4!', 10),
         },
       ]);
 
@@ -39,17 +39,17 @@ describe("Testing Users", () => {
     });
   });
 
-  describe("[GET] /users/:id", () => {
-    it("response findOne User", async () => {
-      const userId = "qpwoeiruty";
+  describe('[GET] /users/:id', () => {
+    it('response findOne User', async () => {
+      const userId = 'qpwoeiruty';
 
       const usersRoute = new UsersRoute();
       const users = usersRoute.usersController.userService.users;
 
       users.findOne = jest.fn().mockReturnValue({
-        _id: "qpwoeiruty",
-        email: "a@email.com",
-        password: await bcrypt.hash("q1w2e3r4!", 10),
+        _id: 'qpwoeiruty',
+        email: 'a@email.com',
+        password: await bcrypt.hash('q1w2e3r4!', 10),
       });
 
       (mongoose as any).connect = jest.fn();
@@ -60,11 +60,11 @@ describe("Testing Users", () => {
     });
   });
 
-  describe("[POST] /users", () => {
-    it("response Create User", async () => {
+  describe('[POST] /users', () => {
+    it('response Create User', async () => {
       const userData: CreateUserDto = {
-        email: "test@email.com",
-        password: "q1w2e3r4",
+        email: 'test@email.com',
+        password: 'q1w2e3r4',
       };
 
       const usersRoute = new UsersRoute();
@@ -72,7 +72,7 @@ describe("Testing Users", () => {
 
       users.findOne = jest.fn().mockReturnValue(false);
       users.create = jest.fn().mockReturnValue({
-        _id: "60706478aad6c9ad19a31c84",
+        _id: '60706478aad6c9ad19a31c84',
         email: userData.email,
         password: await bcrypt.hash(userData.password, 10),
       });
@@ -86,12 +86,12 @@ describe("Testing Users", () => {
     });
   });
 
-  describe("[PUT] /users/:id", () => {
-    it("response Update User", async () => {
-      const userId = "60706478aad6c9ad19a31c84";
+  describe('[PUT] /users/:id', () => {
+    it('response Update User', async () => {
+      const userId = '60706478aad6c9ad19a31c84';
       const userData: CreateUserDto = {
-        email: "test@email.com",
-        password: "q1w2e3r4",
+        email: 'test@email.com',
+        password: 'q1w2e3r4',
       };
 
       const usersRoute = new UsersRoute();
@@ -120,17 +120,17 @@ describe("Testing Users", () => {
     });
   });
 
-  describe("[DELETE] /users/:id", () => {
-    it("response Delete User", async () => {
-      const userId = "60706478aad6c9ad19a31c84";
+  describe('[DELETE] /users/:id', () => {
+    it('response Delete User', async () => {
+      const userId = '60706478aad6c9ad19a31c84';
 
       const usersRoute = new UsersRoute();
       const users = usersRoute.usersController.userService.users;
 
       users.findByIdAndDelete = jest.fn().mockReturnValue({
-        _id: "60706478aad6c9ad19a31c84",
-        email: "test@email.com",
-        password: await bcrypt.hash("q1w2e3r4!", 10),
+        _id: '60706478aad6c9ad19a31c84',
+        email: 'test@email.com',
+        password: await bcrypt.hash('q1w2e3r4!', 10),
       });
 
       (mongoose as any).connect = jest.fn();

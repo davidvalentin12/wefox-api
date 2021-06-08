@@ -1,8 +1,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "target": "es2017",
-    "lib": ["es2017", "esnext.asynciterable"],
+    "target": "es2019",
+    "lib": ["es2015",
+			"es2017",
+			"es2019.Array",
+			"ES2020.Promise",
+      "esnext.asynciterable"],
     "typeRoots": ["node_modules/@types"],
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,

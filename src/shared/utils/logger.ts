@@ -1,9 +1,9 @@
-import fs from "fs";
-import winston from "winston";
-import winstonDaily from "winston-daily-rotate-file";
+import fs from 'fs';
+import winston from 'winston';
+import winstonDaily from 'winston-daily-rotate-file';
 
 // logs dir
-const logDir = __dirname + "/../logs";
+const logDir = __dirname + '/../logs';
 
 if (!fs.existsSync(logDir)) {
   fs.mkdirSync(logDir);
@@ -16,25 +16,25 @@ const logFormat = winston.format.printf(
 const logger = winston.createLogger({
   format: winston.format.combine(
     winston.format.timestamp({
-      format: "YYYY-MM-DD HH:mm:ss",
+      format: 'YYYY-MM-DD HH:mm:ss',
     }),
     logFormat
   ),
   transports: [
     new winstonDaily({
-      level: "debug",
-      datePattern: "YYYY-MM-DD",
-      dirname: logDir + "/debug",
-      filename: `%DATE%.log`,
+      level: 'debug',
+      datePattern: 'YYYY-MM-DD',
+      dirname: logDir + '/debug',
+      filename: '%DATE%.log',
       maxFiles: 30, // 30 Days saved
       json: false,
       zippedArchive: true,
     }),
     new winstonDaily({
-      level: "error",
-      datePattern: "YYYY-MM-DD",
-      dirname: logDir + "/error",
-      filename: `%DATE%.log`,
+      level: 'error',
+      datePattern: 'YYYY-MM-DD',
+      dirname: logDir + '/error',
+      filename: '%DATE%.log',
       maxFiles: 30, // 30 Days saved
       handleExceptions: true,
       json: false,
@@ -54,7 +54,7 @@ logger.add(
 
 const stream = {
   write: (message: string) => {
-    logger.info(message.substring(0, message.lastIndexOf("\n")));
+    logger.info(message.substring(0, message.lastIndexOf('\n')));
   },
 };
 
