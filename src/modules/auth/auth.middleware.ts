@@ -21,10 +21,10 @@ const authMiddleware = async (
 
     if (Authorization) {
       const secretKey: string = config.get('secretKey');
-      const verificationResponse = (await jwt.verify(
+      const verificationResponse = jwt.verify(
         Authorization,
         secretKey
-      )) as DataStoredInToken;
+      ) as DataStoredInToken;
       const userId = verificationResponse._id;
       const findUser = await userModel.findById(userId);
 

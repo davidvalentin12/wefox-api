@@ -2,8 +2,10 @@
     "env": "test",
     "DBConfig": {
         "host": "localhost",
-        "database": "mongoose",
+        "database": "wefox",
         "port": 27017
     },
-    "secretKey": "secretKey"
+    "secretKey": "secretKey",
+    "googleMapsApiKey": "AIzaSyCgWMhb9jKjnrX0kgcMJdS_Sewdub_-K7s",
+    "openWeatherApiKey": "19411c70e923fda7925adb71bec44f04"
 }

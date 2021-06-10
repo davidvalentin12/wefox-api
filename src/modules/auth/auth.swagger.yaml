@@ -1,6 +1,6 @@
 tags:
-  - name: health check
-    description: root OK / healthcheck
+  - name: auth
+    description: authentication
 
 paths:
   # [POST] signup

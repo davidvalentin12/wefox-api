@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import App from '@/app';
-import { CreateUserDto } from '@/modules/auth/users/users.dto';
+import { UserDto } from '@/modules/auth/users/users.dto';
 import AuthRoute from '@/modules/auth/auth.route';
 import { mocked } from 'ts-jest/utils';
 import authMiddleware from '@/modules/auth/auth.middleware';
@@ -18,16 +18,16 @@ afterAll(async () => {
 describe('Testing Auth', () => {
   describe('[POST] /signup', () => {
     it('response should have the Create userData', async () => {
-      const userData: CreateUserDto = {
+      const userData: UserDto = {
         email: 'test@email.com',
         password: 'q1w2e3r4!',
       };
 
       const authRoute = new AuthRoute();
-      const users = authRoute.authController.authService.users;
+      const users = authRoute.authController.authService.userRepository;
 
-      users.findOne = jest.fn().mockReturnValue(null);
-      users.create = jest.fn().mockReturnValue({
+      users.findUserByEmail = jest.fn().mockReturnValue(null);
+      users.createUser = jest.fn().mockReturnValue({
         _id: '60706478aad6c9ad19a31c84',
         email: userData.email,
         password: await bcrypt.hash(userData.password, 10),
@@ -43,15 +43,15 @@ describe('Testing Auth', () => {
 
   describe('[POST] /login', () => {
     it('response should have the Set-Cookie header with the Authorization token', async () => {
-      const userData: CreateUserDto = {
+      const userData: UserDto = {
         email: 'test@email.com',
         password: 'q1w2e3r4!',
       };
 
       const authRoute = new AuthRoute();
-      const users = authRoute.authController.authService.users;
+      const users = authRoute.authController.authService.userRepository;
 
-      users.findOne = jest.fn().mockReturnValue({
+      users.findUserByEmail = jest.fn().mockReturnValue({
         _id: '60706478aad6c9ad19a31c84',
         email: userData.email,
         password: await bcrypt.hash(userData.password, 10),
@@ -68,13 +68,13 @@ describe('Testing Auth', () => {
 
   describe('[POST] /logout', () => {
     it('logout Set-Cookie Authorization=; Max-age=0', async () => {
-      const userData: CreateUserDto = {
+      const userData: UserDto = {
         email: 'test@email.com',
         password: await bcrypt.hash('q1w2e3r4!', 10),
       };
 
       const authRoute = new AuthRoute();
-      const users = authRoute.authController.authService.users;
+      const users = authRoute.authController.authService.userRepository;
       mocked(authMiddleware).mockImplementation(
         // eslint-disable-next-line @typescript-eslint/require-await
         async (req: RequestWithUser, res: Response, next: NextFunction) => {
@@ -83,7 +83,7 @@ describe('Testing Auth', () => {
         }
       );
 
-      users.findOne = jest.fn().mockReturnValue(userData);
+      users.findUserByEmail = jest.fn().mockReturnValue(userData);
 
       (mongoose as any).connect = jest.fn();
       const app = new App([authRoute]);

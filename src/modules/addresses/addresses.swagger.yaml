@@ -1,0 +1,73 @@
+tags:
+  - name: addresses 
+    description: addresses validation
+
+paths:
+  # [POST] validate
+  /addresses/validate:
+    post:
+      tags:
+        - addresses
+      summary: validate addresses
+      parameters:
+        - name: body
+          in: body
+          description: address data
+          required: true
+          schema:
+            $ref: "#/definitions/addresses"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Bad Request"
+        500:
+          description: "Server Error"
+
+  # [POST] weather
+  /addresses/weather:
+    post:
+      tags:
+        - addresses
+      summary: address weather
+      parameters:
+        - name: body
+          in: body
+          description: address data
+          required: true
+          schema:
+            $ref: "#/definitions/addresses"
+      responses:
+        200:
+          description: "OK"
+        400:
+          description: "Bad Request"
+        500:
+          description: "Server Error"
+
+definitions:
+  addresses:
+    type: object
+    required:
+      - street
+      - streetNumber
+      - town
+      - postalCode 
+      - country
+    properties:
+      street:
+        type: string
+        description: street
+      streetNumber:
+        type: number
+        description: streetNumber
+      town:
+        type: string
+        description: town
+      postalCode :
+        type: string
+        description: postalCode 
+      country:
+        type: string
+        description: country
+        

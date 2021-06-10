@@ -1,3 +1,5 @@
+jest.mock('mongoose');
+
 import request from 'supertest';
 import App from '@/app';
 import IndexRoute from '@/modules/index/index.route';
