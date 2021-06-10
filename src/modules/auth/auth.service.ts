@@ -14,9 +14,11 @@ class AuthService {
   public async signup(userData: UserDto): Promise<User> {
     if (isEmpty(userData)) throw new HttpException(400, 'Error in payload');
 
-    const findUser: User = await this.userRepository.findUserByEmail(userData.email);
+    const user: User = await this.userRepository.findUserByEmail(
+      userData.email
+    );
 
-    if (findUser){
+    if (user) {
       throw new HttpException(
         409,
         `You're email ${userData.email} already exists`
@@ -33,40 +35,47 @@ class AuthService {
 
   public async login(
     userData: UserDto
-  ): Promise<{ cookie: string; findUser: User }> {
+  ): Promise<{ cookie: string; user: User }> {
     if (isEmpty(userData)) throw new HttpException(400, 'Error in payload');
 
-    const findUser: User = await this.userRepository.findUserByEmail(userData.email);
-
-    if (!findUser){
-      throw new HttpException(409, `No account exists for this email: ${userData.email}`);
-    }
-
-    const isPasswordMatching: boolean = await bcrypt.compare(
-      userData.password,
-      findUser.password
+    const user: User = await this.userRepository.findUserByEmail(
+      userData.email
     );
 
-    if (!isPasswordMatching){
+    if (!user) {
+      throw new HttpException(
+        409,
+        `No account exists for this email: ${userData.email}`
+      );
+    }
+
+    const isPassword_Matching: boolean = await bcrypt.compare(
+      userData.password,
+      user.password
+    );
+
+    if (!isPassword_Matching) {
       throw new HttpException(409, 'Your password is not matching');
     }
 
-    const tokenData = this.createToken(findUser);
+    const tokenData = this.createToken(user);
     const cookie = this.createCookie(tokenData);
 
-    return { cookie, findUser };
+    return { cookie, user };
   }
 
   public async logout(userData: UserDto): Promise<User> {
     if (isEmpty(userData)) throw new HttpException(400, 'Error in payload');
 
-    const findUser: User = await this.userRepository.findUserByEmail(userData.email);
+    const user: User = await this.userRepository.findUserByEmail(
+      userData.email
+    );
 
-    if (!findUser){
+    if (!user) {
       throw new HttpException(409, `Email ${userData.email} not found`);
     }
 
-    return findUser;
+    return user;
   }
 
   public createToken(user: User): TokenData {
