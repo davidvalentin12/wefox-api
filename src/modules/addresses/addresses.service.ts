@@ -3,13 +3,24 @@ import {
   AddressType,
   GeocodeResult,
 } from '@googlemaps/google-maps-services-js';
-import { AddressValidationResult, AddressWeather, LocationCoordinates } from './addresses.interface';
+import {
+  AddressValidationResult,
+  AddressWeather,
+  LocationCoordinates,
+} from './addresses.interface';
 import GoogleMapsService from '@/shared/services/googleMaps.service';
-import OpenWeatherService, { LocationWeather } from '@/shared/services/openWeather.service';
+import OpenWeatherService, {
+  LocationWeather,
+} from '@/shared/services/openWeather.service';
 
 class AddressesService {
-  public googleMapsService = new GoogleMapsService();
-  public openWeatherService = new OpenWeatherService();
+  public googleMapsService: GoogleMapsService;
+  public openWeatherService: OpenWeatherService;
+
+  constructor(googleMapsService = new GoogleMapsService(), openWeatherService = new OpenWeatherService()) {
+    this.googleMapsService = googleMapsService;
+    this.openWeatherService = openWeatherService;
+  }
 
   public async validateAddress(
     address: AddressDto
@@ -28,18 +39,20 @@ class AddressesService {
   }
 
   public async getAddressWeather(address: AddressDto): Promise<AddressWeather> {
-    const geocodeResult: GeocodeResult = await this.googleMapsService.getAddressGeocode(address);
+    const geocodeResult: GeocodeResult =
+      await this.googleMapsService.getAddressGeocode(address);
     const location: LocationCoordinates = {
-      lat:geocodeResult.geometry.location.lat,
-      lng:geocodeResult.geometry.location.lng
-    }
+      lat: geocodeResult.geometry.location.lat,
+      lng: geocodeResult.geometry.location.lng,
+    };
 
-    const locationWeather: LocationWeather[] = await this.openWeatherService.getLocationWeather(location);
+    const locationWeather: LocationWeather[] =
+      await this.openWeatherService.getLocationWeather(location);
 
     return {
       weather: locationWeather,
-      address: geocodeResult.formatted_address
-    }
+      address: geocodeResult.formatted_address,
+    };
   }
 }
 

@@ -1,9 +1,9 @@
 {
     "env": "test",
     "DBConfig": {
-        "host": "localhost",
+        "host": "mongodb",
         "database": "wefox",
-        "port": 27017
+        "port": 27018
     },
     "secretKey": "secretKey",
     "googleMapsApiKey": "AIzaSyCgWMhb9jKjnrX0kgcMJdS_Sewdub_-K7s",

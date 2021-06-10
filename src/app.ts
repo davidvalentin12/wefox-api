@@ -46,17 +46,18 @@ class App {
     });
   }
 
-  private initializeDBConnection() {
+  private async initializeDBConnection() {
     if (this.env !== 'production') {
       set('debug', true);
     }
-
+    
     try {
-      connect(dbConnection.url, dbConnection.options);
+      await connect(dbConnection.url, dbConnection.options);
     } catch (err) {
       logger.error('############################');
       logger.error('Error connecting to DataBase');
       logger.error('############################');
+      logger.error(err)
       throw err;
     }
   }
@@ -82,9 +83,9 @@ class App {
     const options = {
       swaggerDefinition: {
         info: {
-          title: 'REST API',
+          title: 'Wefox API',
           version: '1.0.0',
-          description: 'Example docs',
+          description: 'Swagger docs',
         },
       },
       apis: ['./src/**/*.swagger.yaml'],

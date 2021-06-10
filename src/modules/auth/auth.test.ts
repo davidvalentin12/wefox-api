@@ -20,7 +20,7 @@ describe('Testing Auth', () => {
     it('response should have the Create userData', async () => {
       const userData: UserDto = {
         email: 'test@email.com',
-        password: 'q1w2e3r4!',
+        password: 'password',
       };
 
       const authRoute = new AuthRoute();
@@ -45,7 +45,7 @@ describe('Testing Auth', () => {
     it('response should have the Set-Cookie header with the Authorization token', async () => {
       const userData: UserDto = {
         email: 'test@email.com',
-        password: 'q1w2e3r4!',
+        password: 'password',
       };
 
       const authRoute = new AuthRoute();
@@ -70,7 +70,7 @@ describe('Testing Auth', () => {
     it('logout Set-Cookie Authorization=; Max-age=0', async () => {
       const userData: UserDto = {
         email: 'test@email.com',
-        password: await bcrypt.hash('q1w2e3r4!', 10),
+        password: await bcrypt.hash('password', 10),
       };
 
       const authRoute = new AuthRoute();

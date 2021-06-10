@@ -1,7 +1,3 @@
-tags:
-  - name: addresses 
-    description: addresses validation
-
 paths:
   # [POST] validate
   /addresses/validate:

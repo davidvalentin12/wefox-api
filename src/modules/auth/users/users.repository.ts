@@ -1,9 +1,9 @@
 import { UserDto } from '@/modules/auth/users/users.dto';
 import { User } from '@/modules/auth/users/users.interface';
-import userModel from '@/modules/auth/users/users.model';
+import UserModel from '@/modules/auth/users/users.model';
 
 class UserRepository {
-  public users = userModel;
+  public users = UserModel;
 
   public async createUser(userData: UserDto): Promise<User> {
     const user: User = await this.users.create(userData);

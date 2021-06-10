@@ -1,13 +1,9 @@
-tags:
-  - name: auth
-    description: authentication
-
 paths:
   # [POST] signup
   /signup:
     post:
       tags:
-        - user
+        - auth
       summary: user signup
       parameters:
         - name: body
@@ -28,7 +24,7 @@ paths:
   /login:
     post:
       tags:
-        - user
+        - auth
       summary: user login
       parameters:
         - name: body
@@ -47,7 +43,7 @@ paths:
   /logout:
     post:
       tags:
-        - user
+        - auth
       summary: user logout
       responses:
         200:
@@ -64,19 +60,6 @@ definitions:
     properties:
       id:
         description: user Id
-      email:
-        type: string
-        description: user Email
-      password:
-        type: string
-        description: user Password
-
-  userLogin:
-    type: object
-    required:
-      - email
-      - password
-    properties:
       email:
         type: string
         description: user Email

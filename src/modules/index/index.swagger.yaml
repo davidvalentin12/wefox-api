@@ -1,7 +1,3 @@
-tags:
-  - name: health check
-    description: root OK / healthcheck
-
 paths:
   # [GET] root
   /:
