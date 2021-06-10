@@ -20,6 +20,8 @@ Connect to the `server` container:
 docker exec -it server /bin/bash
 ```
 
+Once inside, you can execute different commands to `start`, `test`, `lint` the application.
+
 ## Development
 
 Run development mode with:
